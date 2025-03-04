@@ -1,92 +1,126 @@
-#Riccardo Giovenzana
+import random 
+#Punto 1
+lista1=[("antipasti",(8,7,9),"Junior Chef"),("primi",(7,8,8),"Junior Chef"),("secondi",(9,9,8),"Junior Chef"),("dessert",(8,8,9),"Junior Chef")]
+lista2=[("antipasti",(7,7,8),"Senior Chef"),("primi",(8,9,7),"Senior Chef"),("secondi",(7,8,7),"Senior Chef"),("dessert",(9,8,8),"Senior Chef")]
+lista3=[("antipasti",(9,8,8),"Junior Chef"),("primi",(8,7,9),"Junior Chef"),("secondi",(8,8,8),"Junior Chef"),("dessert",(7,9,8),"Junior Chef")]
 
-while(True):
+dizionario={
+    "Mario Rossi":lista1,
+    "Luigi Bianchi":lista2,
+    "Giulia Verdi":lista3
+}
 
+print(dizionario)
+
+#Punto 2
+gusto=11%10
+lista4=[("antipasti",(9,gusto,8),"Senior Chef"),("primi",(8,7,9),"Senior Chef"),("secondi",(8,8,8),"Senior Chef"),("dessert",(7,9,8),"Senior Chef")]
+dizionario["Riccardo Giovenzana"]=lista4
+
+print(dizionario)
+
+"""
+#Punto 3
+def aggiungiCategoria():
+    lista1=[]
+    tuplaX=()
+    for nome,lista in dizionario.items():
+        for tupla in lista:
+            for tipologia,voti,categoria in tupla:
+                n1=random.randint(1,10)
+                n2=random.randint(1,10)
+                n3=random.randint(1,10)
+                tupla=(n1,n2,n3)
+
+                if(tipologia=="Junior Chef"):
+                    tuplaX=(("piatti unici",(tupla),"Junior Chef"))
+
+                if(tipologia=="Senior Chef"):
+                    tuplaX=(("piatti unici",(tupla),"Senior Chef"))
+                        
+                lista1.append(tuplaX)
+                dizionario[nome]=lista
+    print(dizionario)
+
+
+aggiungiCategoria()
+"""
+
+#Punto 4
+def stampaDati(nomeCompleto):
+    if(nomeCompleto in dizionario.keys()):
+        for nome,lista in dizionario.items():
+            if(nomeCompleto == nome):      
+                for categoriaPiatto,punti,categoriaChef in lista:
+                    print(f"Categoria di Chef: {categoriaChef}")
+                    print(f"Nome e Cognome: {nome}")
+                    print(f"Punteggi antipasti:")
+                    print(f"Creatività: {punti[0]}")
+                    print(f"Gusto: {punti[1]}")
+                    print(f"Presentazione: {punti[2]}")
+    else:
+        print("Chef NON trovato")
+        
+nome=str(input("Inserisci il nome dello chef: "))
+cognome=str(input("Inserisci il cognome dello chef: "))
+
+nomeCompleto = nome+" "+cognome
+stampaDati(nomeCompleto)
+
+
+#Punto 5
+def stampaPiatto(categoriaP):
+    for nome,lista in dizionario.items():
+        for categoriaPiatto,punti,categoriaChef in lista:
+            if(categoriaP==categoriaPiatto):
+                print(f"Categoria Piatto: {categoriaPiatto}")
+                print(f"Chef: {nome}")
+                print(f"Creatività: {punti[0]}")
+                print(f"Gusto: {punti[1]}")
+                print(f"Presentazione: {punti[2]}")
+
+
+categoriaP=str(input("Inserisci la categoria del piatto: "))
+stampaPiatto(categoriaP)
+
+#Punto 7
+def inserisci_dati_nuovo_chef():
+    tuplaVoti=()
+    lista=[]
+    nome=str(input("Inserisci il nome dello chef: "))
+    cognome=str(input("Inserisci il cognome dello chef: "))
+
+    while(nome+ " "+cognome in dizionario.keys()):
+        print("Errore - REINSERISCI")
+        nome=str(input("Inserisci il nome dello chef: "))
+        cognome=str(input("Inserisci il cognome dello chef: "))
+        
+
+    for i in range (0,5):
+
+        categoriaP=str(input("Insersci la tipologia del piatto: "))
+
+        votoC=int(input("Inserisci il voto della creatività: "))
+
+        while(votoC<=0 or votoC>10):
+            votoC=int(input("Errore, Reinserisci il voto della creatività"))
+
+        votoG=int(input("Inserisci il voto del gusto: "))
+        while(votoG<=0 or votoG>10):
+            votoG=int(input("Errore, Reinserisci il voto del gusto"))
+
+        votoP=int(input("Inserisci il voto della presentazione: "))
+        while(votoP<=0 or votoP>10):
+            votoP=int(input("Errore, Reinserisci il voto della presentazione"))
+
+        tuplaVoti=(votoC,votoG,votoP)
+        
+        categoriaChef=str(input("Insersci la categoria dello chef: "))
+
+        tupla1=(categoriaP,tuplaVoti,categoriaChef)
+        lista.append(tupla1)
+
+        dizionario[nome+" "+cognome]=lista
+    print(dizionario)
     
-    print("Media goal parite = 1 \nMedia goal squadra=2 \nPartia con piu goal=3 \nPartita con meno goal=4")
-    scelta=int(input("Inserisci un opzione: (0 per uscire) :"))
-
-    tupla_partite = (
-        ("SquadraA", "SquadraB", 3, 2),
-        ("SquadraC", "SquadraD", 1, 1),
-        ("SquadraB", "SquadraC", 2, 4),
-        ("SquadraD", "SquadraA", 0, 3),
-        ("SquadraB", "SquadraD", 1, 2)
-    )
-    if(scelta==1):
-        def media_gol_partite(tupla_partite):
-            somma1=0
-            somma2=0
-            somma3=0
-            conta=0
-            for squadraCasa,squadraOspite,goal1,goal2 in tupla_partite:
-                somma1=somma1+goal1
-                somma2=somma2+goal2
-                conta+=2
-            somma3=somma1+somma2       
-            media=somma3/conta
-            return(media)
-
-        mediaGoal=media_gol_partite(tupla_partite)
-        print(f"Media goal partite {mediaGoal}")
-        print("--------------------------------------------\n")
-    elif(scelta==2):
-        def media_gol_squadra(tupla_partite,squadra):
-            somma=0
-            conta=0
-            media=0
-            for squadraCasa,squadraOspite,goal1,goal2 in tupla_partite:
-                if(squadraCasa==squadra):
-                    somma=somma+goal1
-                    conta=conta+1
-                    media=somma/conta
-                    return media
-                elif(squadraOspite==squadra):
-                    somma=somma+goal2
-                    conta=conta+1
-                    media=somma/conta
-                    return media
-            
-        squadra=str(input("Inserisci la squadra: "))
-        mediaSquadra=media_gol_squadra(tupla_partite,squadra)       
-        print(f"Media goal squadra {mediaSquadra}")
-        print("--------------------------------------------\n")
-    elif(scelta==3):
-        def partita_con_più_goal(tupla_partite):
-            maxgoal=0
-            
-            for squadraCasa,squadraOspite,goal1,goal2 in tupla_partite:
-                totgoal=goal1+goal2
-                if(totgoal>maxgoal):
-                    maxgoal=totgoal
-                    squadra1=squadraCasa
-                    squadra2=squadraOspite
-                    maxgoal1=goal1
-                    maxgoal2=goal2
-
-            return (maxgoal,squadra1, squadra2,maxgoal1,maxgoal2)   
-        maxgoal = partita_con_più_goal(tupla_partite)
-        print(f"Goal totali: {maxgoal[0]}")
-        print(f"Squadra di casa {maxgoal[1]} : {maxgoal[3]} goal")
-        print(f"Squadra di ospite {maxgoal[2]} : {maxgoal[4]} goal ")
-        print("--------------------------------------------\n")
-    elif(scelta==4):
-        def partita_con_meno_goal(tupla_partite):
-            mingoal=100000000
-            for squadraCasa,squadraOspite,goal1,goal2 in tupla_partite:
-                totgoal=goal1+goal2
-                if(totgoal<mingoal):
-                    mingoal=totgoal
-                    squadra1=squadraCasa
-                    squadra2=squadraOspite
-                    mingoal1=goal1
-                    mingoal2=goal2
-            return (mingoal,squadra1, squadra2,mingoal1,mingoal2)
-        mingoal = partita_con_meno_goal(tupla_partite)
-        print(f"Goal totali: {mingoal[0]}")
-        print(f"Squadra di casa {mingoal[1]}, con {mingoal[3]} goal")
-        print(f"Squadra di ospite {mingoal[2]}, con {mingoal[4]} goal")
-        print("--------------------------------------------\n")
-    elif(scelta==0):
-        break
-print(f"FINE ESECUZIONE PROGRAMMA")
+inserisci_dati_nuovo_chef()  
